@@ -1,0 +1,4 @@
+# ninja log v5
+2	5556	7132667667284179	C:/Users/minho/Desktop/O2net-main/O2net-main/O2net-main/ops/O2net_sg/O2net/ops/build/temp.win-amd64-cpython-37/Release/Users/minho/Desktop/O2net-main/O2net-main/O2net-main/ops/O2net_sg/O2net/ops/src/cpu/ms_deform_attn_cpu.obj	cc7c6e6c85980820
+27	15048	7132667762045177	C:/Users/minho/Desktop/O2net-main/O2net-main/O2net-main/ops/O2net_sg/O2net/ops/build/temp.win-amd64-cpython-37/Release/Users/minho/Desktop/O2net-main/O2net-main/O2net-main/ops/O2net_sg/O2net/ops/src/vision.obj	feb6b74207e30b0d
+12	19812	7132667807782266	C:/Users/minho/Desktop/O2net-main/O2net-main/O2net-main/ops/O2net_sg/O2net/ops/build/temp.win-amd64-cpython-37/Release/Users/minho/Desktop/O2net-main/O2net-main/O2net-main/ops/O2net_sg/O2net/ops/src/cuda/ms_deform_attn_cuda.obj	3a8eca9b51a4c43f
