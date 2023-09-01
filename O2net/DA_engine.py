@@ -25,6 +25,9 @@ import torch.nn.functional as F
 import numpy as np
 import time
 
+import math #add
+
+
 
 def box_to_mask(boxes, size):
     mask = torch.zeros(size).cuda()
@@ -59,6 +62,20 @@ def swd(source_features, target_features, M=256):
     target_proj, _ = torch.sort(target_proj, dim=1)
     loss = (source_proj - target_proj).pow(2).sum() / M / batch_size
     return loss 
+
+def jsd(source_features, target_features):
+    #batch_size_js = source_features.size(0)
+    prob_mean = 0.5 * (F.softmax(target_features, dim=-1) + F.softmax(source_features, dim=-1))
+
+    loss_cmt_cls_js += 0.5 * (
+                F.kl_div(F.log_softmax(source_features, dim=-1), prob_mean) +
+                F.kl_div(F.log_softmax(target_features, dim=-1), prob_mean)
+            )
+    loss_js = loss_cmt_cls_js / (source_features.size(0))
+
+    return loss_js
+
+
 
 def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module, args,
         data_loader_src: Iterable, data_loader_tgt: Iterable, optimizer: torch.optim.Optimizer,
@@ -165,8 +182,10 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module, args,
             loss_da += DA_img_loss
             loss_global_da += global_DA_img_loss
         loss_dict["loss_da"] = args.instance_loss_coef * loss_da + loss_global_da
-        loss_dict["loss_wasserstein"] = swd(hs_src[-1], hs_tgt[-1])
-        
+        #loss_dict["loss_wasserstein"] = swd(hs_src[-1], hs_tgt[-1])
+        loss_dict["loss_wasserstein"] = jsd(hs_src[-1], hs_tgt[-1])
+
+
         losses = sum(loss_dict[k] * weight_dict[k]
                      for k in loss_dict.keys() if k in weight_dict)
        
