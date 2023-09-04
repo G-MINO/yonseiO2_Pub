@@ -66,11 +66,7 @@ def swd(source_features, target_features, M=256):
 def jsd(source_features, target_features):
     #batch_size_js = source_features.size(0)
     prob_mean = 0.5 * (F.softmax(target_features, dim=-1) + F.softmax(source_features, dim=-1))
-
-    loss += 0.5 * (
-                F.kl_div(F.log_softmax(source_features, dim=-1), prob_mean) +
-                F.kl_div(F.log_softmax(target_features, dim=-1), prob_mean)
-            )
+    loss = 0.5 * (F.kl_div(F.log_softmax(source_features, dim=-1), prob_mean) + F.kl_div(F.log_softmax(target_features, dim=-1), prob_mean) )
     loss = loss / (source_features.size(0))
 
     return loss
